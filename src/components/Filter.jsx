@@ -1,5 +1,5 @@
 import React from "react";
-import filterIcon from "../../public/assets/filter.svg";
+import filterIcon from "/assets/filter.svg";
 
 function Filter({
   upcomingRides,
