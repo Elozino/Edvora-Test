@@ -1,5 +1,5 @@
 import React from "react";
-import Img from "../../public/assets/profile.jpg";
+import Img from "/assets/profile.jpg";
 
 function Header({ user }) {
   return (

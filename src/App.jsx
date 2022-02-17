@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { user, Ride } from "./api/data";
 import _ from "lodash";
-import filterIcon from "/assets/filter.svg";
 import Header from "./components/Header";
 import Filter from "./components/Filter";
 import Card from "./components/Card";
