@@ -65,9 +65,6 @@ function App() {
 
       <main className="px-10 text-gray-100 text-opacity-60">
         {data?.map((item, i) => {
-          const filteredData = item.station_path;
-          // console.log(filteredData);
-          // console.log(_.intersection(filteredData, filterNearsestRide(40)));
           return <Card item={item} i={i} key={item.id} />;
         })}
       </main>
