@@ -24,4 +24,69 @@ If a state is already selected then the city dropdown will have cities from sele
 NOTE: 
 when you select any state/city or state & city make sure the ride is nearest in that state/city or state & city. 
 
+  // const nearRide = data.map((item) => item.station_path);
+    
+    // const closestRide = nearRide.filter(item => item.includes(value) || item.includes(value + 5));
+    // console.log(closestRide);
+    // const flatRide = nearRide.flat();
+    // const sample = flatRide.filter(
+    //   (item) => item >= value && item <= value + 10
+    // );
+    // .sort((a, b) => a - b);
+    // const sortedNearRide = nearRide.sort((a, b) => a - b);
+    // const filter = nearRide.filter((item) => item);
+    // const filterHigh = nearRide.map((item) =>
+    //   item.filter((item) => item > value && item < value + 10)
+    // );
 
+    // console.log(nearRide);
+    // console.log(sortedNearRide);
+    // console.log(filter);
+    // console.log(filterHigh);
+    // console.log(sample);
+    // return sample;
+
+
+  function filterNearsestRide(value) {
+    const ride1 = value + 1;
+    const ride2 = value + 2;
+    const ride3 = value + 3;
+    const nearestRideArray = [];
+
+    // Conditions
+    const nearRide = data.filter((item) => item.station_path.includes(value));
+    const nearRide1 = data.filter((item) => item.station_path.includes(ride1));
+    const nearRide2 = data.filter((item) => item.station_path.includes(ride2));
+    const nearRide3 = data.filter((item) => item.station_path.includes(ride3));
+    if (nearRide) {
+      nearestRideArray.push(nearRide);
+      console.log(nearestRideArray.flat());
+    } else if (nearRide1) {
+      nearestRideArray.push(...nearestRideArray, nearRide1);
+      // setData(nearestRideArray.flat());
+      console.log(nearestRideArray.flat());
+    } else if (nearRide2) {
+      nearestRideArray.push(...nearestRideArray, nearRide2);
+      // setData(nearestRideArray.flat());
+      console.log(nearestRideArray);
+    } else if (nearRide3) {
+      nearestRideArray.push(...nearestRideArray, nearRide3);
+      // setData(nearestRideArray.flat())
+      console.log(nearestRideArray.flat());
+    } else {
+      return data;
+    }
+  }
+
+
+      const nearRide = data.filter(
+      (item) =>
+        item.origin_station_code == value ||
+        item.origin_station_code > value + 3 ||
+        item.origin_station_code < value - 3
+    );
+    console.log(nearRide);
+
+        const nearRide = closestRide.sort(
+      (a, b) => a.origin_station_code + b.origin_station_code
+    );

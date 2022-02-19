@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import filterIcon from "/assets/filter.svg";
 
 function Filter({
@@ -10,8 +10,20 @@ function Filter({
   showFilter,
   setData,
   Ride,
-  filterStateCity,
 }) {
+  const [select, setSelect] = useState(false);
+  const [value, setValue] = useState("");
+
+  // Function to filter both by city and state
+
+  function filterStateCity(search, val) {
+    let stateOrCity = Ride?.map((item) => item);
+    let filteredStateOrCity = stateOrCity.filter(
+      (item) => item[`${search}`] == val
+    );
+    setData(filteredStateOrCity);
+  }
+
   return (
     <main className="px-10 text-gray-100 text-opacity-60">
       <header className="md:flex justify-between items-center py-5 relative">
@@ -33,42 +45,82 @@ function Filter({
           </h4>
         </div>
         <div
-          onClick={() => setShowFilter(!showFilter)}
+          onClick={() => {
+            setSelect(!select);
+            setShowFilter(!showFilter);
+          }}
           className="border-b-2 border-transparent cursor-pointer flex items-center justify-end "
         >
           <img src={filterIcon} alt="image" />
           <span className="ml-2"> Filter</span>
-          {showFilter && (
-            <>
-              <div className="absolute top-28 md:top-16 right-0 bg-neutral-900 shadow-lg p-3 md:p-5 rounded-lg w-3/5 sm:w-2/5 md:w-1/6">
-                <h4>Filters</h4>
-                <hr className="my-3" />
+        </div>
+
+        {showFilter && (
+          <>
+            <div className="absolute top-28 md:top-16 right-0 bg-neutral-900 shadow-lg p-3 md:p-5 rounded-lg w-3/5 sm:w-2/5 md:w-1/4">
+              <h4>Filters</h4>
+              <hr className="my-3" />
+              <div className="bg-zinc-800 py-2 px-5 rounded-lg mb-3">
                 <div
-                  onClick={() => {
-                    setData(Ride);
-                    filterStateCity("state", "Maharashtra2");
-                  }}
-                  className="bg-zinc-800 py-2 px-5 rounded-lg flex items-center justify-between mb-3"
+                  onClick={() => setSelect(!select)}
+                  className="flex items-center justify-between mb-1"
                 >
                   <p>State</p>
-                  {/* <p>▽</p> */}
                   <p>&#9660;</p>
                 </div>
+                {select && (
+                  <select
+                    value={value}
+                    onChange={(e) => {
+                      filterStateCity("state", e.target.value);
+                    }}
+                    className="bg-zinc-800 w-full"
+                  >
+                    <option defaultValue>Select State</option>
+                    {Ride.map((item, i) => (
+                      <option
+                        value={item.state}
+                        className="bg-slate-500 "
+                        key={i}
+                      >
+                        {item.state}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+              <div className="bg-zinc-800 py-2 px-5 rounded-lg mb-3">
                 <div
-                  onClick={() => {
-                    setData(Ride);
-                    filterStateCity("city", "Panvel1");
-                  }}
-                  className="bg-zinc-800 py-2 px-5 rounded-lg flex items-center justify-between mb-3"
+                  onClick={() => setSelect(!select)}
+                  className="flex items-center justify-between mb-1"
                 >
                   <p>City</p>
-                  {/* <p>▽</p> */}
                   <p>&#9660;</p>
                 </div>
+                {select && (
+                  <select
+                    value={value}
+                    onChange={(e) => {
+                      filterStateCity("city", e.target.value);
+                    }}
+                    className="bg-zinc-800 w-full"
+                  >
+                    <option defaultValue>Select City</option>
+                    {Ride.map((item, i) => (
+                      <option
+                        value={item.city}
+                        className="bg-slate-500 "
+                        key={i}
+                      >
+                        {item.city}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </header>
     </main>
   );

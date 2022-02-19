@@ -10,36 +10,24 @@ function App() {
   const [data, setData] = useState(Ride);
   const [pastRide, setPastRide] = useState(0);
   const [upcomingRide, setUpComingRide] = useState(0);
-  // console.log(new Date(1645042406101));
-  // console.log(new Date().getTime());
-  // var d = Date.parse("2022-03-19T20:23:01.804Z");
-  // console.log(d);
 
   // function to filter nearest ride
   function filterNearsestRide(value) {
-    // const min = value;
-    // const max = value + 10;
-    const nearRide = data.map((item) => item.station_path);
-    const flatRide = nearRide.flat();
-    const sample = flatRide.filter(
-      (item) => item >= value && item <= value + 10
-    );
-    // .sort((a, b) => a - b);
-    // const sortedNearRide = nearRide.sort((a, b) => a - b);
-    // const filter = nearRide.filter((item) => item);
-    // const filterHigh = nearRide.map((item) =>
-    //   item.filter((item) => item > value && item < value + 10)
-    // );
+    const nearRide = data
+      .map((item) => item.station_path.sort((a, b) => a - b))
+      .flat()
+      .sort((a, b) => a - b);
+    const closeRide = data.filter((item) => item.station_path.includes(value));
 
-    // console.log(nearRide.flat());
-    // console.log(sortedNearRide);
-    // console.log(filter);
-    // console.log(filterHigh);
-    // console.log(sample);
-    return sample;
+    const presentRides = nearRide.filter((item) => item >= value);
+    const onePresentRide = [...new Set(presentRides)];
+    // console.log(presentRides);
+    console.log(onePresentRide);
+    // console.log(nearRide);
+    console.log(closeRide);
   }
 
-  filterNearsestRide();
+  filterNearsestRide(40);
 
   //Ride Event
   let currentDate = new Date().getTime();
@@ -54,15 +42,6 @@ function App() {
   // Past rides
   function pastRides() {
     setData(filterByPastRide);
-  }
-
-  // Function to filter both by city and state
-  function filterStateCity(search, value) {
-    let stateOrCity = Ride?.map((item) => item);
-    let filteredStateOrCity = stateOrCity.filter(
-      (item) => item[`${search}`] == value
-    );
-    setData(filteredStateOrCity);
   }
 
   useEffect(() => {
@@ -82,7 +61,6 @@ function App() {
         showFilter={showFilter}
         setData={setData}
         Ride={Ride}
-        filterStateCity={filterStateCity}
       />
 
       <main className="px-10 text-gray-100 text-opacity-60">
@@ -90,7 +68,7 @@ function App() {
           const filteredData = item.station_path;
           // console.log(filteredData);
           // console.log(_.intersection(filteredData, filterNearsestRide(40)));
-          return <Card item={item} i={i} />;
+          return <Card item={item} i={i} key={item.id} />;
         })}
       </main>
 
