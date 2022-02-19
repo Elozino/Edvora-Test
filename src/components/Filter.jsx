@@ -12,6 +12,7 @@ function Filter({
   Ride,
 }) {
   const [select, setSelect] = useState(false);
+  const [inputField, setInput] = useState(false);
 
   // Function to filter both by city and state
 
@@ -41,12 +42,26 @@ function Filter({
     <main className="px-10 text-gray-100 text-opacity-60">
       <header className="md:flex justify-between items-center py-5 relative">
         <div className="flex items-center">
-          <h4
-            onClick={() => filterNearsestRide(20)}
-            className="mr-4 cursor-pointer px-2 pb-2 border-b-2 border-transparent hover:border-gray-100"
-          >
-            Nearest rides
-          </h4>
+          <div>
+            <h4
+              onClick={() => setInput(!inputField)}
+              className="mr-4 cinputFieldrsor-pointer px-2 pb-2 border-b-2 border-transparent hover:border-gray-100"
+            >
+              Nearest rides
+            </h4>
+            {inputField && (
+              <div className="text-black absolute left-0 bottom-3 md:top-12 w-full">
+                <input
+                  type="number"
+                  min={20}
+                  max={99}
+                  onChange={(e) => filterNearsestRide(e.target.value)}
+                  placeholder="Select a station path"
+                  className="w-2/5 md:w-1/6 px-2 py-1"
+                />
+              </div>
+            )}
+          </div>
           <h4
             onClick={() => upcomingRides()}
             className="mr-4 cursor-pointer px-2 pb-2  border-b-2 border-transparent hover:border-gray-100"

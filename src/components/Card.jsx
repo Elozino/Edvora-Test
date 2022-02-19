@@ -7,7 +7,7 @@ function Card({ item , i}) {
       <div className="md:ml-6 mt-4 md:mt-0">
         <p>Ride Id : {item.id}</p>
         <p>Origin Station : {item.origin_station_code}</p>
-        <p>station_path : [{item.station_path}]</p>
+        <p>station_path : {item.station_path.toString().replaceAll("," , ", ")}</p>
         <p>Date : {`${new Date(item.date).toLocaleDateString()}`}</p>
         <p>Distance : {item.destination_station_code}</p>
       </div>
