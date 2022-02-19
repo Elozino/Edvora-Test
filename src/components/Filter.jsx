@@ -12,7 +12,6 @@ function Filter({
   Ride,
 }) {
   const [select, setSelect] = useState(false);
-  const [value, setValue] = useState("");
 
   // Function to filter both by city and state
 
@@ -24,11 +23,28 @@ function Filter({
     setData(filteredStateOrCity);
   }
 
+  function filterNearsestRide(value) {
+    const ride1 = value + 1;
+    const ride2 = value + 2;
+    const ride3 = value + 3;
+
+    const closestRide = Ride.filter((item) =>
+      item.station_path.find(
+        (item) =>
+          item == value || item == ride1 || item == ride2 || item == ride3
+      )
+    );
+    setData(closestRide);
+  }
+
   return (
     <main className="px-10 text-gray-100 text-opacity-60">
       <header className="md:flex justify-between items-center py-5 relative">
         <div className="flex items-center">
-          <h4 className="mr-4 cursor-pointer px-2 pb-2 border-b-2 border-transparent hover:border-gray-100">
+          <h4
+            onClick={() => filterNearsestRide(20)}
+            className="mr-4 cursor-pointer px-2 pb-2 border-b-2 border-transparent hover:border-gray-100"
+          >
             Nearest rides
           </h4>
           <h4
@@ -70,7 +86,6 @@ function Filter({
                 </div>
                 {select && (
                   <select
-                    value={value}
                     onChange={(e) => {
                       filterStateCity("state", e.target.value);
                     }}
@@ -99,7 +114,6 @@ function Filter({
                 </div>
                 {select && (
                   <select
-                    value={value}
                     onChange={(e) => {
                       filterStateCity("city", e.target.value);
                     }}

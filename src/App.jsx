@@ -11,23 +11,10 @@ function App() {
   const [pastRide, setPastRide] = useState(0);
   const [upcomingRide, setUpComingRide] = useState(0);
 
-  // function to filter nearest ride
-  function filterNearsestRide(value) {
-    const nearRide = data
-      .map((item) => item.station_path.sort((a, b) => a - b))
-      .flat()
-      .sort((a, b) => a - b);
-    const closeRide = data.filter((item) => item.station_path.includes(value));
+  // var nearArray = [];
 
-    const presentRides = nearRide.filter((item) => item >= value);
-    const onePresentRide = [...new Set(presentRides)];
-    // console.log(presentRides);
-    console.log(onePresentRide);
-    // console.log(nearRide);
-    console.log(closeRide);
-  }
-
-  filterNearsestRide(40);
+  // setData(nearArray)
+  // console.log(nearArray);
 
   //Ride Event
   let currentDate = new Date().getTime();
@@ -47,7 +34,7 @@ function App() {
   useEffect(() => {
     setUpComingRide(filterByUpcoimingRide);
     setPastRide(filterByPastRide);
-  }, []);
+  }, [data]);
 
   return (
     <div className="bg-zinc-800 pb-5">

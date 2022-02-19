@@ -24,6 +24,12 @@ If a state is already selected then the city dropdown will have cities from sele
 NOTE: 
 when you select any state/city or state & city make sure the ride is nearest in that state/city or state & city. 
 
+
+
+
+
+
+
   // const nearRide = data.map((item) => item.station_path);
     
     // const closestRide = nearRide.filter(item => item.includes(value) || item.includes(value + 5));
@@ -90,3 +96,20 @@ when you select any state/city or state & city make sure the ride is nearest in 
         const nearRide = closestRide.sort(
       (a, b) => a.origin_station_code + b.origin_station_code
     );
+
+
+     // function to filter nearest ride
+  function filterNearsestRide(value) {
+    const nearRide = data
+      .map((item) => item.station_path.sort((a, b) => a - b))
+      .flat()
+      .sort((a, b) => a - b);
+    const closeRide = data.filter((item) => item.station_path.includes(value));
+
+    const presentRides = nearRide.filter((item) => item >= value);
+    const onePresentRide = [...new Set(presentRides)];
+    // console.log(presentRides);
+    console.log(onePresentRide);
+    // console.log(nearRide);
+    console.log(closeRide);
+  }
